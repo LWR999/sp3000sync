@@ -1,0 +1,5 @@
+venv
+*.db
+*.log
+api_key.txt
+sp3000sync_test/

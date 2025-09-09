@@ -1,0 +1,133 @@
+# Music Library Manager Configuration for Production
+
+# Paths
+paths:
+  base: "/home/dl/drobos/hibiki/media/music/lossless"
+  database: "/home/dl/sp3000sync/music_library.db"
+  log: "/home/dl/sp3000sync/music_library.log"
+  cache: "/home/dl/sp3000sync/cache"
+  playlists_source: "/home/dl/drobos/hibiki/media/Playlists_roon"
+  playlists_export: "/home/dl/drobos/hibiki/media/Playlists_sp3000"
+  device_root: "/storage/C231-0D03/Music/"
+
+llm:
+  api_key: ""
+  api_url: "https://api.anthropic.com/v1/messages"
+  embedding_url: "https://api.anthropic.com/v1/embeddings"
+  model: "claude-3-sonnet-20240229"
+  embedding_model: "claude-3-sonnet-20240229-embedding"
+
+# File formats
+formats:
+  audio: [".flac", ".dsf"]  # Supported audio formats
+  
+# Scanning settings
+scan:
+  threads: 8                # Number of parallel processing threads
+  batch_size: 100           # Albums to process in each batch
+  read_buffer: 1048576      # 1MB buffer size for file reads
+  metadata_only: true       # Only read metadata, not full file content
+  use_cache: true           # Cache file information locally
+  
+# Performance optimization
+optimization:
+  max_files_per_query: 500  # Maximum files per database query
+  incremental_mode: true    # Always prefer incremental updates over full scans
+  read_ahead: true          # Enable read-ahead caching
+  sqlite_pragmas:           # SQLite performance settings
+    journal_mode: WAL       # Write-Ahead Logging for better concurrency
+    synchronous: NORMAL     # Balance between safety and performance
+    temp_store: MEMORY      # Use memory for temporary storage
+    cache_size: -50000      # Use ~50MB of RAM for DB cache
+
+music_preferences:
+  default_profile: "jazz_electronic_funk"  # Which profile to use by default
+  
+  # You can define multiple profiles
+  profiles:
+    jazz_electronic_funk:
+      # Standard weight references (all equal importance)
+      reference_points:
+        - "Jazz fusion with electronic elements and smooth textures"
+        - "Downtempo electronic music with jazz instrumentation"
+        - "Nu-jazz with atmospheric electronic production"
+        - "Lounge music with jazz samples and electronic beats"
+        - "Acid jazz with electronic synthesizers and dance elements"
+        - "Chill-out electronic music with jazz influences"
+        - "Electronic lounge music with improvisational jazz solos"
+        - "Soulpersona-style modern soul with vintage production techniques and smooth R&B influences"
+        - "Brand New Heavies-inspired acid jazz with funk basslines, horn sections and soulful vocals"
+        - "Jamiroquai-style funk with disco elements, synth textures and infectious grooves"
+        - "Neo-soul with jazz-funk instrumentation and sophisticated chord progressions"
+        - "Classic rare groove and R&B with modern production values and sampling techniques"
+        - "70s-inspired funk with tight horn sections, Rhodes piano and syncopated rhythms"
+        - "Deep house music with soulful vocals and jazz-influenced keyboard solos"
+        - "Soul and funk with broken beat electronic production and jazzy arrangements"
+        - "Contemporary jazz-funk with hip-hop influences and sophisticated improvisations"
+        - "Sophisticated R&B with jazz harmony and deep groove sensibilities"
+        - "Instrumental soul-jazz with funky drum breaks and melodic horn arrangements"
+        - "Urban jazz with soul vocals and contemporary electronic production"
+        - "Incognito-style jazz-funk fusion with smooth production and soulful ensemble playing"
+        - "Soul II Soul-inspired R&B with electronic beats and atmospheric string arrangements"
+        - "Jazz-house fusion with deep grooves and sophisticated instrumental solos"
+        - "Downtempo funk with atmospheric production and vintage keyboard sounds"
+        - "Kyoto Jazz Massive-style nu-jazz with global influences and electronic textures"
+        - "Hyperdrive Sound-inspired broken beat with complex rhythms and soulful elements"
+        - "Luna Lounge-style atmospheric jazz with electronic underpinnings and ambient textures"
+        - "Kraftwerk-inspired electronic minimalism with jazz harmonies and funk grooves"
+      
+      # Artist-specific references
+      artist_references:
+        - "Music similar to Soulpersona's modern soul with vintage production techniques"
+        - "Albums that sound like Brand New Heavies with their acid jazz, funk basslines and horn sections"
+        - "Tracks with Jamiroquai's style of funk, disco elements and infectious grooves"
+        - "Music in the style of Incognito's sophisticated jazz-funk fusion"
+        - "Albums with the Soul II Soul aesthetic of R&B with electronic beats and string arrangements"
+        - "Tracks that feature Kyoto Jazz Massive's nu-jazz style with global influences"
+        - "Music similar to Hyperdrive Sound's broken beat with complex rhythms"
+        - "Albums with the Luna Lounge vibe of atmospheric jazz and lounge elements"
+        - "Tracks influenced by Kraftwerk's electronic minimalism but with jazz harmonies"
+        - "Music that combines Carl Hudson's keyboard jazz with electronic elements"
+        - "Albums similar to Miles Davis' electric period with funk and electronic elements"
+        - "Tracks that capture the spirit of Donald Byrd's jazz-funk fusion era"
+        - "Music with Freddie Hubbard's sophisticated jazz trumpet with modern production"
+        - "Albums similar to James Taylor Quartet's acid jazz and funk instrumentals"
+      
+      # Weighted references (higher weight = stronger preference)
+      weighted_references:
+        - reference: "Soulpersona-style modern soul with vintage production techniques and smooth R&B influences"
+          weight: 3.0
+        - reference: "Brand New Heavies-inspired acid jazz with funk basslines, horn sections and soulful vocals"
+          weight: 3.0
+        - reference: "Jamiroquai-style funk with disco elements, synth textures and infectious grooves"
+          weight: 3.0
+        - reference: "Neo-soul with jazz-funk instrumentation and sophisticated chord progressions"
+          weight: 2.5
+        - reference: "Acid jazz with electronic synthesizers and dance elements"
+          weight: 2.5
+        - reference: "Jazz fusion with electronic elements and smooth textures"
+          weight: 2.0
+        - reference: "Incognito-style jazz-funk fusion with smooth production and soulful ensemble playing"
+          weight: 2.0
+        - reference: "Instrumental soul-jazz with funky drum breaks and melodic horn arrangements"
+          weight: 2.0
+        - reference: "Kyoto Jazz Massive-style nu-jazz with global influences and electronic textures"
+          weight: 2.0
+        - reference: "Soul and funk with broken beat electronic production and jazzy arrangements"
+          weight: 1.5
+        - reference: "Luna Lounge-style atmospheric jazz with electronic underpinnings and ambient textures"
+          weight: 1.5
+        - reference: "Lounge music with jazz samples and electronic beats"
+          weight: 1.5
+        - reference: "Classic rare groove and R&B with modern production values and sampling techniques"
+          weight: 1.5
+        - reference: "Deep house music with soulful vocals and jazz-influenced keyboard solos"
+          weight: 1.0
+        - reference: "Kraftwerk-inspired electronic minimalism with jazz harmonies and funk grooves"
+          weight: 1.0
+        - reference: "Downtempo electronic music with jazz instrumentation"
+          weight: 1.0
+        - reference: "Electronic lounge music with improvisational jazz solos"
+          weight: 1.0
+        - reference: "Chill-out electronic music with jazz influences"
+          weight: 1.0
